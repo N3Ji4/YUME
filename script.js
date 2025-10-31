@@ -1,50 +1,42 @@
-async scrapeProxies() {
-    this.showLoading(true);
-    this.log('🚀 Memulai scraping proxy dari berbagai sumber...', 'info');
-    
+async checkSingleProxy(proxy) {
     try {
-        const response = await fetch('/api/scrape-proxies', {
+        const response = await fetch('/api/check-proxy', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                type: document.getElementById('proxyType').value,
-                country: document.getElementById('country').value,
-                timeout: parseInt(document.getElementById('timeout').value)
+                proxy: proxy.ip + ':' + proxy.port,
+                type: proxy.type,
+                timeout: 3000 // Timeout lebih pendek untuk speed
             })
         });
 
-        // First check if response is OK
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error: ${response.status}`);
         }
 
-        // Get response as text first to debug
-        const responseText = await response.text();
-        console.log('Raw response:', responseText);
+        const result = await response.json();
         
-        // Try to parse as JSON
-        let data;
-        try {
-            data = JSON.parse(responseText);
-        } catch (parseError) {
-            console.error('JSON parse error:', parseError);
-            throw new Error(`Invalid JSON response: ${responseText.substring(0, 100)}...`);
-        }
-        
-        if (data.success) {
-            this.proxies = data.proxies;
-            this.updateTable();
-            this.updateStats();
-            this.log(`✅ ${data.message || `Berhasil scrape ${data.proxies.length} proxy`}`, 'success');
+        if (result.working) {
+            proxy.working = true;
+            proxy.speed = result.speed;
+            proxy.lastCheck = new Date().toLocaleTimeString();
+            this.workingProxies.push(proxy);
+            
+            this.log(`✅ ${proxy.ip}:${proxy.port} - ${proxy.speed}ms`, 'success');
         } else {
-            throw new Error(data.error || data.message || 'Unknown error');
+            proxy.working = false;
+            proxy.lastCheck = new Date().toLocaleTimeString();
         }
+
+        this.updateTableRow(proxy);
+        this.updateStats();
+        
     } catch (error) {
-        console.error('Scrape error:', error);
-        this.log(`❌ Gagal scrape proxy: ${error.message}`, 'error');
-    } finally {
-        this.showLoading(false);
+        proxy.working = false;
+        proxy.lastCheck = new Date().toLocaleTimeString();
+        this.updateTableRow(proxy);
+        this.updateStats();
     }
 }
