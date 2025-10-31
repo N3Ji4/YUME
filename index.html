@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 PROXY HUB - Download & Check Proxy 100% Accurate</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-rocket"></i> PROXY HUB</h1>
+            <p>Download & Check Proxy dengan Akurasi 100%</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="input-group">
+                    <label for="proxyType">Jenis Proxy:</label>
+                    <select id="proxyType">
+                        <option value="all">Semua Type</option>
+                        <option value="http">HTTP</option>
+                        <option value="https">HTTPS</option>
+                        <option value="socks4">SOCKS4</option>
+                        <option value="socks5">SOCKS5</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="country">Negara:</label>
+                    <select id="country">
+                        <option value="all">Semua Negara</option>
+                        <option value="us">United States</option>
+                        <option value="id">Indonesia</option>
+                        <option value="sg">Singapore</option>
+                        <option value="jp">Japan</option>
+                        <option value="de">Germany</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="timeout">Timeout (ms):</label>
+                    <input type="number" id="timeout" value="5000" min="1000" max="10000">
+                </div>
+
+                <div class="button-group">
+                    <button id="scrapeBtn" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Scrape Proxy
+                    </button>
+                    <button id="checkBtn" class="btn btn-success">
+                        <i class="fas fa-check"></i> Check All
+                    </button>
+                    <button id="downloadBtn" class="btn btn-warning">
+                        <i class="fas fa-file-download"></i> Download Working
+                    </button>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-panel">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalProxies">0</div>
+                    <div class="stat-label">Total Proxy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="workingProxies">0</div>
+                    <div class="stat-label">Working</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="successRate">0%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avgSpeed">0ms</div>
+                    <div class="stat-label">Avg Speed</div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Ready to start...</div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="results-section">
+                <div class="table-container">
+                    <table id="proxyTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll"></th>
+                                <th>IP Address</th>
+                                <th>Port</th>
+                                <th>Type</th>
+                                <th>Country</th>
+                                <th>Speed</th>
+                                <th>Status</th>
+                                <th>Last Check</th>
+                            </tr>
+                        </thead>
+                        <tbody id="proxyTableBody">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Log Console -->
+            <div class="console-section">
+                <div class="console-header">
+                    <h3><i class="fas fa-terminal"></i> Live Log</h3>
+                    <button id="clearLog" class="btn btn-sm">Clear</button>
+                </div>
+                <div class="console" id="console">
+                    <div class="log-entry">🚀 Proxy Hub Ready - System Initialized</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <div class="loading-text">Processing...</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
